@@ -15,7 +15,7 @@ const color off = {0, 0, 0};
 typedef struct side side;
 struct side {
   int pin_r, pin_g, pin_b, pin_reset_button;
-}
+};
 
 const side left = {11, 10, 9, 4};
 const side right = {6, 5, 3, 2};
@@ -46,8 +46,8 @@ void make_ready_red() {
 
 void start_match() {
   pulse(3);
-  color(green, left);
-  color(green, right);
+  set_color(green, left);
+  set_color(green, right);
   m.in_progress = true;
   unsigned long now = millis();
   m.start_ts = now;
@@ -56,33 +56,33 @@ void start_match() {
 
 void end_match() {
   pulse(5);
-  color(orange, left);
-  color(orange, right);
+  set_color(orange, left);
+  set_color(orange, right);
   pulse(5);
-  color(red, left);
-  color(red, right);
+  set_color(red, left);
+  set_color(red, right);
   delay(10000);
   reset_match();
-}
+};
 
 void reset_match() {
   m.is_blue_ready = false;
   m.is_red_ready = false;
-  m.start_ts = null;
-  m.end_ts = null;
+  m.start_ts = NULL;
+  m.end_ts = NULL;
   m.in_progress = false;
-  color(white, left);
-  color(white, right);
+  set_color(white, left);
+  set_color(white, right);
 }
 
-void pulse(times) {
+void pulse(int times) {
   // Run pulse effect on the current colors
 }
 
-void color(color c, side s) {
-  analogWrite(side.pin_r, c.r);
-  analogWrite(side.pin_g, c.g);
-  analogWrite(side.pin_b, c.b);
+void set_color(color c, side s) {
+  analogWrite(s.pin_r, c.r);
+  analogWrite(s.pin_g, c.g);
+  analogWrite(s.pin_b, c.b);
 }
 
 // the setup routine runs once when you press reset:
