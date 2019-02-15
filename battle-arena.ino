@@ -17,8 +17,8 @@ struct side {
   int pin_r, pin_g, pin_b, pin_reset_button;
 };
 
-const side left = {11, 10, 9, 4};
-const side right = {6, 5, 3, 2};
+const side left = {11, 10, 9, 3};
+const side right = {6, 5, 4, 2};
 
 // Match
 typedef struct match match;
@@ -28,7 +28,8 @@ struct match {
   bool in_progress;
 };
 
-const unsigned long MATCH_WARN_LENGTH = 110000;
+// const unsigned long MATCH_WARN_LENGTH = 110000; // tournament length
+const unsigned long MATCH_WARN_LENGTH = 35000;  // demo length
 
 match m = {false, false};
 
@@ -37,14 +38,17 @@ bool teams_ready() {
 }
 
 void make_ready_blue() {
+  Serial.println("Blue ready");
   m.is_blue_ready = true;
 }
 
 void make_ready_red() {
+  Serial.println("Red ready");
   m.is_red_ready = true;
 }
 
 void start_match() {
+  Serial.println("Start match!");
   pulse(3);
   set_color(green, left);
   set_color(green, right);
@@ -55,6 +59,7 @@ void start_match() {
 }
 
 void end_match() {
+  Serial.println("End Match");
   pulse(5);
   set_color(orange, left);
   set_color(orange, right);
@@ -66,6 +71,7 @@ void end_match() {
 };
 
 void reset_match() {
+  Serial.println("Reset Match");
   m.is_blue_ready = false;
   m.is_red_ready = false;
   m.start_ts = NULL;
